@@ -1,0 +1,20 @@
+html{
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+*,
+*::after,
+*::before{
+    box-sizing: inherit;
+}
+body{
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    background: #8360c3;
+    background: linear-gradient(to right, #2ebf91,#8360c3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

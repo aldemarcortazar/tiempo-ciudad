@@ -1,0 +1,12 @@
+nav{
+    align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+    height: 4rem;
+    width: 100vw;
+}
+nav a{
+    color:#ffffff;
+    font-size: 1.4rem;
+    text-decoration: none;
+}
