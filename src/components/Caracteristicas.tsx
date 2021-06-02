@@ -1,15 +1,17 @@
 import { ReactElement } from "react";
 
-// interface Caracteristicasprops {
-//   city:string
-// }
-const Caracteristicas:React.FunctionComponent = ():ReactElement => {
-  const data:string = localStorage.getItem('city')||'';
-  const {name, temperatura, windspeed} = JSON.parse(data);
+interface Caracteristicasprops {
+   city:string,
+   temperatura:number,
+   windspeed: number
+ }
+const Caracteristicas:React.FunctionComponent<Caracteristicasprops> = ({city, temperatura, windspeed}):ReactElement => {
+
+  
   return (
 
     <>
-    <p>ciudad: {name}</p>
+    <p>ciudad: {city}</p>
     <p>temperatura: °{temperatura}</p>
     <p>viento: {windspeed}</p>
     </>
@@ -17,5 +19,6 @@ const Caracteristicas:React.FunctionComponent = ():ReactElement => {
     
   );
 }
+
 
 export default Caracteristicas;

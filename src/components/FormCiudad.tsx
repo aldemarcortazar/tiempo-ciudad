@@ -4,6 +4,10 @@ import UseFetchData from '../hooks/useFetchData';
 import Caracteristicas from './Caracteristicas';
 import API from './../helpers/api';
 import './css/form.css';
+import {objectGlobalState} from './../interfaces/interfaces';
+import Noticia from './Noticia';
+import { title } from 'process';
+
 
 // interface FormCiudadProps{
 //     city:string,
@@ -11,11 +15,23 @@ import './css/form.css';
 
 const FormCiudad: React.FunctionComponent = (): ReactElement => {
     // const refval = useRef();
-    let datalocalStorage;
+    
     const [valueId, setValueId] = useState<string>('')
     const [valueCiudad, setValueCiudad] = useState<string>('');
-    console.log(valueId, valueCiudad);
-   
+    const [globalState , setGlobalState] = useState<objectGlobalState>({
+        idCity:0,
+        name:'',
+        idCiudad:0,
+        author:'',
+        tittle:'',
+        Published:'',
+        idClima:0,
+        temperatura:0,
+        windspeed:0
+
+    });
+    const {idCity, name, idCiudad, author, tittle, Published, idClima, temperatura, windspeed} = globalState;
+    
   
     
 
@@ -32,35 +48,24 @@ const FormCiudad: React.FunctionComponent = (): ReactElement => {
             .then(data => {
 
                 console.log(data);
-                interface objectLocalStorage{
-                    idCity:number,
-                    name:string,
-                    idCiudad:number,
-                    author:string,
-                    tittle:string,
-                    Published:string,
-                    idClima:number,
-                    temperatura:number,
-                    windspeed:number
-
-                }
+              
                 const {city, news, clima}  = data;
                 const {id , nombre} = city ; 
-                const {id:idCiudad , author, tittle, Published} = news ;
+                const {id:idCiudad , author, title, published} = news ;
                 const {id:idClima, temperatura, windSpeed} = clima;
-                const datosLocalStorages:objectLocalStorage = {
+                const datosLocalStorages:objectGlobalState = {
                     idCity:id,
                     name:nombre,
                     idCiudad,
                     author,
-                    tittle,
-                    Published,
+                    tittle:title,
+                    Published:published,
                     idClima,
                     temperatura,
                     windspeed:windSpeed
 
                 }  
-                localStorage.setItem('city',`${JSON.stringify(datosLocalStorages)}`)
+                setGlobalState(datosLocalStorages);
             })
             .catch(err => console.error(err));
         // alert('hola');
@@ -68,23 +73,25 @@ const FormCiudad: React.FunctionComponent = (): ReactElement => {
     };
 
     return (
-        <div
-            className="form"
-        >
+        <>
+            <div
+                className="form"
+            >
             <section className="info">
                 {
-                    (datalocalStorage == null)
-                      ? <p> Todavia no has hecho busquedas introduce tu ciudad</p>
-                      : <Caracteristicas /> 
-                      
+                    (name == '')
+                        ? <p> Todavia no has hecho busquedas, introduce tu ciudad</p>
+                        :   <Caracteristicas 
+                                city={name}
+                                temperatura ={temperatura}
+                                windspeed = {windspeed}
+                            />
                 }
-               
             </section>
-
-            <form
-                className="formulario"
-                onSubmit={ (e) => enviar(e)}
-            >
+                <form
+                    className="formulario"
+                    onSubmit={ (e) => enviar(e)}
+                >
                 <input
                     type="number"
                     placeholder="escribe el id ciudad"
@@ -99,11 +106,15 @@ const FormCiudad: React.FunctionComponent = (): ReactElement => {
                     name="ciudad"
                     onChange={(e) => setValueCiudad(e.target.value)}
                     value={valueCiudad}
-                />
+                    />
 
-                <button type="submit"> Buscar.. </button>
-            </form>
-        </div>
+                    <button type="submit"> Buscar.. </button>
+                </form>
+            </div>
+            {
+                (name != '') && <Noticia author ={author} title={title} Published={Published}/>
+            }
+        </>  
     );
 }
 

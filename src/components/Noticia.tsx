@@ -2,17 +2,18 @@ import { ReactElement } from "react";
 
 import './css/noticia.css';
 
-const Noticia:React.FunctionComponent= ():ReactElement => {
-  const data = localStorage.getItem('city');
+interface NoticiasProps {
+  author:string,
+  title:string,
+  Published:string
+}
+const Noticia:React.FunctionComponent<NoticiasProps>= ({author, title, Published}):ReactElement => {
+  
 
   return (
     <>
       
-      {
-        (data == null)
-          ? <h2> no hay noticias para mostar </h2>
-          : <h2> noticias </h2>
-      }
+     
       <table>
         <tr>
           <td>author</td>
@@ -20,9 +21,9 @@ const Noticia:React.FunctionComponent= ():ReactElement => {
           <td>fecha</td>
         </tr>
         <tr>
-          <td> juan </td>
-          <td> policias vs ladrones</td>
-          <td> 2020-03-10</td>
+          <td> {author} </td>
+          <td> {title}</td>
+          <td> {Published}</td>
         </tr>
       </table>
     </>
