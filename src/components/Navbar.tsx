@@ -4,7 +4,7 @@ import {
     } from 'react-router-dom';
 
 import './css/navbar.css';
-const NavBar:React.FC = ():ReactElement => {
+const NavBar:React.FunctionComponent = ():ReactElement => {
 
     return (
         

@@ -3,10 +3,18 @@ import { ReactElement } from "react";
 // interface Caracteristicasprops {
 //   city:string
 // }
-const Caracteristicas:React.FC = ():ReactElement => {
-
+const Caracteristicas:React.FunctionComponent = ():ReactElement => {
+  const data:string = localStorage.getItem('city')||'';
+  const {name, temperatura, windspeed} = JSON.parse(data);
   return (
-    <h3>holi</h3>
+
+    <>
+    <p>ciudad: {name}</p>
+    <p>temperatura: °{temperatura}</p>
+    <p>viento: {windspeed}</p>
+    </>
+    
+    
   );
 }
 
