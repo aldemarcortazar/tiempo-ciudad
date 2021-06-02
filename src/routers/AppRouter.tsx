@@ -9,6 +9,7 @@ import FormCiudad from '../components/FormCiudad';
 
 import NavBar from '../components/Navbar';
 import Busquedas from '../components/Busquedas';
+import Noticia from '../components/Noticia';
 const AppRouter:React.FC = ( ):ReactElement => {
     
     return (
@@ -22,6 +23,10 @@ const AppRouter:React.FC = ( ):ReactElement => {
 
                 <Redirect to="/formu" />
             </Switch>
+
+            {
+                (!localStorage.getItem('city')) && <Noticia />
+            }
         </Router>
     );
 }
