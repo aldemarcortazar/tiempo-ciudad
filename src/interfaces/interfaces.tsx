@@ -1,4 +1,4 @@
-
+/******** en este archivo se agregaran interfaces */
 export interface objectGlobalState{
     idCity:number,
     name:string,
