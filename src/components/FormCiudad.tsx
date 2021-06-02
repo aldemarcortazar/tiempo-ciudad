@@ -1,42 +1,73 @@
-import {FormEvent, ReactElement} from 'react';
-
+import {ReactElement, useState} from 'react';
+import UseFetchData from '../hooks/useFetchData';
+// import useForm from '../hooks/useForm';
+import Caracteristicas from './Caracteristicas';
+import API from './../helpers/api';
 import './css/form.css';
 
-const FormCiudad:React.FC = (  ):ReactElement => {
+// interface FormCiudadProps{
+//     city:string,
+// }
 
-    const handleDelete = (e:FormEvent):void => {
+const FormCiudad: React.FC = (): ReactElement => {
+    // const refval = useRef();
+
+    const [valueId, setValueId] = useState<string>()
+    const [valueCiudad, setValueCiudad] = useState<string>('');
+    console.log(valueId, valueCiudad);
+
+
+    const enviar:Function = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        alert('hola');
-    }
+        fetch(`${API.CIUDAD}${valueId} / ${valueCiudad}`, {
+            'mode': 'cors',
+            'headers': {
+                'Access-Control-Allow-origin': '*',
+            }
+        })
+            .then(res => res.ok ? res.json() : Promise.reject(res))
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => console.error(err));
+        // alert('hola');
+        //https://localhost:44332/api/ciudad/10/aruba     endpoint
+    };
 
     return (
         <div
             className="form"
         >
-            <section className="info"> 
-                <h2>KIEV/UA</h2>
-                <h2>CLEAR SKY</h2>
-                <h2>-4 °C</h2>  
+            <section className="info">
+                {
+                    (localStorage.getItem('city') == null)
+                      ? <p> todavia no haz hecho busquedas introduce tu ciudad</p>
+                      : <Caracteristicas /> 
+                }
+               
             </section>
 
             <form
-                onSubmit={ (e) => handleDelete(e) }
+                className="formulario"
+                onSubmit={ (e) => enviar(e)}
             >
-            <input 
-                type= "text"
-                placeholder="escribe el id ciudad"
-            />
+                <input
+                    type="number"
+                    placeholder="escribe el id ciudad"
+                    name="id"
+                    onChange={(e) => setValueId(e.target.value)}
+                    value={valueId}
+                />
 
-            <input
-                type="text"
-                placeholder="escribe el nombre de la ciudad"
-            />
+                <input
+                    type="text"
+                    placeholder="escribe el nombre de la ciudad"
+                    name="ciudad"
+                    onChange={(e) => setValueCiudad(e.target.value)}
+                    value={valueCiudad}
+                />
 
-            <button
-                type="submit"
-            >
-                Buscar..
-            </button>
+                <button type="submit"> Buscar.. </button>
             </form>
         </div>
     );
