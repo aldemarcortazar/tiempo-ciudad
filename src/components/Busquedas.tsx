@@ -1,6 +1,6 @@
 import { ReactElement } from "react"
 
-const Busquedas:React.FC = ():ReactElement => {
+const Busquedas:React.FunctionComponent = ():ReactElement => {
 
   return (
     <>

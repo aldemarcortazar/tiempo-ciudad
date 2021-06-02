@@ -24,9 +24,7 @@ const AppRouter:React.FC = ( ):ReactElement => {
                 <Redirect to="/formu" />
             </Switch>
 
-            {
-                (!localStorage.getItem('city')) && <Noticia />
-            }
+           
         </Router>
     );
 }
